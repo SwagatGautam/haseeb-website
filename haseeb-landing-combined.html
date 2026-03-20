@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="en" data-lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Haseeb — AI Bookkeeping for Kuwait | حسيب</title>
+<meta name="description" content="AI bookkeeping for Kuwaiti businesses. محاسبة ذكية للشركات الكويتية.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Cairo:wght@400;600;700;900&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<style>
+:root{
+  --void:#0F1114;--black:#0a0a0a;--charcoal:#1A1A1A;
+  --teal:#00A684;--red:#FD361C;--cream:#f7f4ef;--warm:#F5F0EB;
+  --muted:rgba(245,240,235,.5);
+  --border:rgba(245,240,235,.06);--border2:rgba(245,240,235,.1);
+  --grid-dot:0,166,132;
+  --phone-bg:var(--void);--phone-border:var(--border2);--phone-shadow:rgba(0,0,0,.5);--phone-notch:var(--black);
+  --dm-user-bg:rgba(245,240,235,.07);--dm-ai-bg:rgba(0,166,132,.08);--dm-ai-border:rgba(0,166,132,.1);
+  --terminal-bg:var(--black);--terminal-bar-bg:rgba(245,240,235,.015);
+  --card-bg:rgba(245,240,235,.015);--card-hover-bg:rgba(0,166,132,.02);
+  --icon-bg:rgba(0,166,132,.08);--feat-ex-bg:rgba(245,240,235,.025);--feat-ex-color:rgba(245,240,235,.5);
+  --shuf-bg:var(--charcoal);--badge-ina-bg:rgba(245,240,235,.03);--badge-ina-color:rgba(245,240,235,.3);
+  --stack-bg:var(--charcoal);--stack-accent:.25;
+  --kuwait-glow:radial-gradient(circle,#064E3B 0%,transparent 70%);
+  --cta-glow-opacity:.03;--hero-glow-base:.04;
+  --nav-scrolled-bg:rgba(15,17,20,.92);--mobile-menu-bg:rgba(15,17,20,.97);
+  --ghost-color:rgba(245,240,235,.4);--scroll-line-bg:var(--border2);
+  --cost-red-border:rgba(253,54,28,.35);
+  --footer-name:rgba(245,240,235,.15);--footer-sub:rgba(245,240,235,.1);
+}
+[data-theme="light"]{
+  --void:#FAFAF8;--black:#F2F0EC;--charcoal:#E8E6E1;
+  --warm:#1A1A18;--muted:rgba(26,26,24,.5);
+  --border:rgba(26,26,24,.08);--border2:rgba(26,26,24,.12);
+  --grid-dot:0,120,96;
+  --phone-bg:#FAFAF8;--phone-border:rgba(26,26,24,.12);--phone-shadow:rgba(0,0,0,.08);--phone-notch:#F2F0EC;
+  --dm-user-bg:rgba(26,26,24,.05);--dm-ai-bg:rgba(0,166,132,.06);--dm-ai-border:rgba(0,166,132,.12);
+  --terminal-bg:#F2F0EC;--terminal-bar-bg:rgba(26,26,24,.03);
+  --card-bg:rgba(26,26,24,.02);--card-hover-bg:rgba(0,166,132,.04);
+  --icon-bg:rgba(0,166,132,.1);--feat-ex-bg:rgba(26,26,24,.03);--feat-ex-color:rgba(26,26,24,.5);
+  --shuf-bg:#E8E6E1;--badge-ina-bg:rgba(26,26,24,.04);--badge-ina-color:rgba(26,26,24,.35);
+  --stack-bg:#E8E6E1;--stack-accent:.15;
+  --kuwait-glow:radial-gradient(circle,rgba(0,166,132,.08) 0%,transparent 70%);
+  --cta-glow-opacity:.06;--hero-glow-base:.03;
+  --nav-scrolled-bg:rgba(250,250,248,.92);--mobile-menu-bg:rgba(250,250,248,.97);
+  --ghost-color:rgba(26,26,24,.35);--scroll-line-bg:rgba(26,26,24,.12);
+  --cost-red-border:rgba(253,54,28,.25);
+  --footer-name:rgba(26,26,24,.15);--footer-sub:rgba(26,26,24,.1);
+}
+/* TOGGLE BUTTONS */
+.toggle-btn{background:none;border:1px solid var(--border2);height:36px;border-radius:18px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .3s;flex-shrink:0;padding:0}
+.toggle-btn:hover{border-color:var(--teal);background:rgba(0,166,132,.06)}
+.toggle-btn svg{width:16px;height:16px;stroke:var(--muted);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;transition:stroke .3s}
+.toggle-btn:hover svg{stroke:var(--teal)}
+.theme-toggle{width:36px}
+.theme-toggle .icon-moon{display:block}.theme-toggle .icon-sun{display:none}
+[data-theme="light"] .theme-toggle .icon-moon{display:none}
+[data-theme="light"] .theme-toggle .icon-sun{display:block}
+.lang-toggle{padding:0 14px;font-family:'DM Mono',monospace;font-size:11px;letter-spacing:1px;color:var(--muted);gap:6px;transition:color .3s}
+.lang-toggle:hover{color:var(--teal)}
+.lang-toggle .lang-label::after{content:'عربي'}
+[data-lang="ar"] .lang-toggle .lang-label::after{content:'EN'}
+
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+html.transitioning,html.transitioning *:not(.dm):not(.tw-line):not(.shuf-card):not(.word span):not(.demo-step){transition:background-color .4s,color .4s,border-color .4s!important}
+body{font-family:'DM Sans',sans-serif;background:var(--void);color:var(--warm);overflow-x:hidden;-webkit-font-smoothing:antialiased}
+
+/* ═══ ARABIC MODE ═══ */
+[data-lang="ar"]{direction:rtl}
+[data-lang="ar"] body{font-family:'Cairo',sans-serif}
+[data-lang="ar"] .tag{font-family:'Cairo',sans-serif;font-size:13px;font-weight:700;letter-spacing:1px}
+[data-lang="ar"] .h2{letter-spacing:0;line-height:1.2;font-size:clamp(34px,4.8vw,58px)}
+[data-lang="ar"] .para{font-size:20px;font-weight:600;line-height:1.9}
+[data-lang="ar"] .hero-h1{font-style:normal;letter-spacing:0;line-height:1.2;font-size:clamp(44px,7vw,82px)}
+[data-lang="ar"] .hero-tag{font-family:'Cairo',sans-serif;letter-spacing:1px;font-size:14px;font-weight:700}
+[data-lang="ar"] .hero-h3{font-size:clamp(22px,2.8vw,32px);font-weight:800;letter-spacing:0;line-height:1.5}
+[data-lang="ar"] .hero-sub{font-size:20px;font-weight:600;line-height:1.9}
+[data-lang="ar"] .hero-cta,[data-lang="ar"] .cta-btn,[data-lang="ar"] .mm-cta{flex-direction:row-reverse}
+[data-lang="ar"] .hero-cta svg,[data-lang="ar"] .cta-btn svg{transform:scaleX(-1)}
+[data-lang="ar"] .hero-cta:hover svg,[data-lang="ar"] .cta-btn:hover svg{transform:scaleX(-1) translateX(4px)}
+[data-lang="ar"] .hero-scroll{left:auto;right:48px}
+[data-lang="ar"] .demo-caption{right:auto;left:0}
+[data-lang="ar"] .demo-step{transform:translateX(-30px)}
+[data-lang="ar"] .dm-user{align-self:flex-start;border-bottom-left-radius:4px;border-bottom-right-radius:14px}
+[data-lang="ar"] .dm-ai{align-self:flex-end;border-bottom-right-radius:4px;border-bottom-left-radius:14px}
+[data-lang="ar"] .dm-typing{align-self:flex-end}
+[data-lang="ar"] .feat-ex{border-left:none;border-right:2px solid var(--teal)}
+[data-lang="ar"] .feat-title{font-size:20px;font-weight:900;letter-spacing:0}
+[data-lang="ar"] .feat-desc{font-size:16px;font-weight:600;line-height:1.8}
+[data-lang="ar"] .feat-ex{font-size:14px}
+[data-lang="ar"] .stack-inner::before{left:auto;right:0}
+[data-lang="ar"] .stack-t{font-size:30px;letter-spacing:0;font-weight:900}
+[data-lang="ar"] .stack-d{font-size:18px;font-weight:600;line-height:1.85}
+[data-lang="ar"] .stack-ex{font-size:15px;font-weight:600}
+[data-lang="ar"] .cost-label{font-size:16px;font-weight:600}
+[data-lang="ar"] .cost-value{font-size:18px}
+[data-lang="ar"] .cost-total .cost-label{font-size:14px;font-weight:800}
+[data-lang="ar"] .demo-step-t{font-size:17px;font-weight:800}
+[data-lang="ar"] .demo-step-d{font-size:15px;font-weight:600;line-height:1.7}
+[data-lang="ar"] .dm{font-size:15px;line-height:1.65;font-weight:600}
+[data-lang="ar"] .cta-h{font-style:normal;letter-spacing:0;line-height:1.2}
+[data-lang="ar"] .hero-h1 em,[data-lang="ar"] .cta-h em,[data-lang="ar"] .h2 em{font-style:normal}
+[data-lang="ar"] .nav-brand{letter-spacing:2px;font-size:16px}
+[data-lang="ar"] .nav-links a{font-size:13px;letter-spacing:0;font-weight:700}
+[data-lang="ar"] .mm-link{font-size:22px;letter-spacing:0;font-weight:900}
+[data-lang="ar"] .shuf-txt{font-size:15px;font-weight:700}
+[data-lang="ar"] .f-txt{font-family:'Cairo',sans-serif;font-size:12px;font-weight:700}
+[data-lang="ar"] #tw{direction:ltr;text-align:left}
+@media(max-width:900px){
+  [data-lang="ar"] .hero-scroll{right:20px}
+  [data-lang="ar"] .demo-caption{position:relative;left:auto;transform:none;width:100%;margin-top:40px}
+  [data-lang="ar"] .demo-step{opacity:1!important;transform:none!important}
+}
+
+/* ═══ LANG SHOW/HIDE ═══ */
+[data-lang="en"] [data-ar]{display:none}
+[data-lang="ar"] [data-en]{display:none}
+
+/* ═══════ GLOW GRID ═══════ */
+.glow-grid{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.glow-grid canvas{width:100%;height:100%}
+
+/* ═══════ NAV ═══════ */
+.nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:24px 48px;display:flex;justify-content:space-between;align-items:center;transition:all .5s;background:transparent}
+.nav.scrolled{background:var(--nav-scrolled-bg);backdrop-filter:blur(20px);padding:16px 48px;border-bottom:1px solid var(--border)}
+.nav-brand{font-weight:900;font-size:14px;letter-spacing:5px;color:var(--warm);text-transform:uppercase}
+.nav-brand i{color:var(--teal);font-style:normal}
+.nav-r{display:flex;gap:20px;align-items:center}
+.nav-links{display:flex;gap:24px;align-items:center}
+.nav-links a{font-size:12px;font-weight:500;color:var(--muted);text-decoration:none;letter-spacing:1.5px;text-transform:uppercase;transition:color .3s}
+.nav-links a:hover{color:var(--warm)}
+.nav-toggles{display:flex;gap:8px;align-items:center}
+.nav-burger{display:none;background:none;border:none;cursor:pointer;width:28px;height:20px;position:relative;z-index:200;flex-direction:column;justify-content:space-between}
+.nav-burger span{display:block;width:100%;height:2px;background:var(--warm);transition:all .3s}
+.nav-burger.open span:nth-child(1){transform:translateY(9px) rotate(45deg)}
+.nav-burger.open span:nth-child(2){opacity:0}
+.nav-burger.open span:nth-child(3){transform:translateY(-9px) rotate(-45deg)}
+.mobile-menu{position:fixed;inset:0;z-index:99;background:var(--mobile-menu-bg);backdrop-filter:blur(24px);display:flex;flex-direction:column;justify-content:center;align-items:center;gap:28px;opacity:0;pointer-events:none;transition:opacity .35s}
+.mobile-menu.open{opacity:1;pointer-events:auto}
+.mm-link{font-size:20px;font-weight:700;color:var(--warm);text-decoration:none;letter-spacing:3px;text-transform:uppercase;transition:color .3s}
+.mm-link:hover{color:var(--teal)}
+.mm-cta{margin-top:12px;padding:16px 48px;background:var(--teal);color:#0F1114;font-size:14px;font-weight:700;letter-spacing:1.5px}
+.mm-toggles{display:flex;gap:10px;margin-top:8px}
+
+/* ═══════ SHARED ═══════ */
+section{position:relative;z-index:2}
+.container{max-width:1120px;margin:0 auto}
+.tag{font-family:'DM Mono',monospace;font-size:11px;font-weight:500;color:var(--teal);letter-spacing:4px;text-transform:uppercase;margin-bottom:20px}
+.h2{font-weight:900;font-size:clamp(32px,4.5vw,54px);letter-spacing:-2px;line-height:1.08;margin-bottom:24px}
+.h2 em{color:var(--teal);font-style:normal}
+.para{font-size:18px;color:var(--muted);line-height:1.8;max-width:520px}
+
+/* ═══════ HERO ═══════ */
+.hero{position:relative;min-height:100vh;display:flex;align-items:center;overflow:hidden;z-index:2}
+.hero-glow{position:absolute;width:700px;height:700px;border-radius:50%;background:radial-gradient(circle,var(--teal) 0%,transparent 70%);opacity:var(--hero-glow-base);top:50%;left:50%;transform:translate(-50%,-50%);animation:heroGlow 8s ease-in-out infinite;z-index:0}
+@keyframes heroGlow{0%,100%{transform:translate(-50%,-50%) scale(1)}50%{transform:translate(-50%,-50%) scale(1.3)}}
+.hero-content{position:relative;z-index:3;padding:0 48px;max-width:900px}
+.hero-tag{font-family:'DM Mono',monospace;font-size:13px;color:var(--teal);letter-spacing:5px;text-transform:uppercase;margin-bottom:32px;overflow:hidden}
+.hero-tag span{display:inline-block}
+.hero-h1{font-weight:900;font-style:italic;font-size:clamp(48px,7.5vw,88px);line-height:1.04;letter-spacing:-3px;margin-bottom:28px}
+.hero-h1 em{font-style:italic;color:var(--teal)}
+.hero-h1 .word{display:inline-block;overflow:hidden;vertical-align:bottom}
+.hero-h1 .word span{display:inline-block}
+.hero-h3{font-weight:700;font-size:clamp(20px,2.5vw,28px);color:var(--muted);line-height:1.4;margin-bottom:20px;letter-spacing:-.5px}
+.hero-sub{font-size:18px;font-weight:400;color:var(--muted);line-height:1.8;max-width:520px;margin-bottom:40px;opacity:.7}
+.hero-actions{display:flex;align-items:center;gap:24px;flex-wrap:wrap}
+.hero-cta{display:inline-flex;align-items:center;gap:10px;padding:17px 48px;background:var(--teal);color:#0F1114;font-weight:700;font-size:14px;letter-spacing:1.5px;text-decoration:none;transition:all .4s;border:none;outline:none}
+.hero-cta:hover{background:#00c49b;transform:translateY(-2px);box-shadow:0 16px 48px rgba(0,166,132,.25)}
+.hero-cta svg{width:16px;height:16px;transition:transform .3s}
+.hero-cta:hover svg{transform:translateX(4px)}
+.hero-ghost{font-size:13px;font-weight:500;color:var(--ghost-color);text-decoration:none;letter-spacing:1px;transition:color .3s}
+.hero-ghost:hover{color:var(--warm)}
+.hero-scroll{position:absolute;bottom:40px;left:48px;z-index:3}
+.hero-scroll-line{width:1px;height:48px;background:var(--scroll-line-bg);position:relative;overflow:hidden}
+.hero-scroll-line::after{content:'';position:absolute;top:-100%;left:0;width:100%;height:50%;background:var(--teal);animation:scrollDrop 2s ease-in-out infinite}
+@keyframes scrollDrop{0%{top:-50%}100%{top:150%}}
+.divider{height:1px;background:var(--border);position:relative;z-index:2;overflow:hidden}
+.divider::after{content:'';position:absolute;top:0;left:0;width:120px;height:100%;background:linear-gradient(90deg,transparent,var(--teal),transparent);animation:divSlide 4s ease-in-out infinite}
+@keyframes divSlide{0%{left:-120px}100%{left:100%}}
+
+/* ═══════ DEMO ═══════ */
+.demo{padding:140px 48px;background:var(--black)}
+.demo-stage{margin-top:72px;position:relative}
+.demo-phone{width:320px;height:580px;background:var(--phone-bg);border:1px solid var(--phone-border);border-radius:24px;margin:0 auto;position:relative;overflow:hidden;box-shadow:0 40px 80px var(--phone-shadow),0 0 0 1px var(--border);animation:phoneFloat 6s ease-in-out infinite}
+@keyframes phoneFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+.demo-phone::after{content:'';position:absolute;inset:-80px;border-radius:50%;background:radial-gradient(circle,rgba(0,166,132,.08) 0%,transparent 70%);z-index:-1;pointer-events:none}
+.demo-phone-notch{width:120px;height:24px;background:var(--phone-notch);border-radius:0 0 16px 16px;position:absolute;top:0;left:50%;transform:translateX(-50%);z-index:10}
+.demo-phone-screen{padding:48px 20px 20px;height:100%;display:flex;flex-direction:column}
+.demo-phone-bar{display:flex;align-items:center;gap:8px;margin-bottom:20px}
+.demo-phone-bar-dot{width:8px;height:8px;border-radius:50%;background:var(--teal)}
+.demo-phone-bar-name{font-family:'DM Mono',monospace;font-size:11px;color:var(--teal);letter-spacing:2px}
+.demo-msgs{flex:1;display:flex;flex-direction:column;gap:10px;overflow:hidden}
+.dm{max-width:82%;padding:12px 16px;border-radius:14px;font-size:13px;line-height:1.55;opacity:0;transform:translateY(16px) scale(.96);transition:all .5s cubic-bezier(.23,1,.32,1)}
+.dm.show{opacity:1;transform:translateY(0) scale(1)}
+.dm-user{background:var(--dm-user-bg);align-self:flex-end;border-bottom-right-radius:4px;color:var(--warm)}
+.dm-ai{background:var(--dm-ai-bg);align-self:flex-start;border-bottom-left-radius:4px;color:var(--warm);border:1px solid var(--dm-ai-border)}
+.dm-ai b{color:var(--teal);font-weight:500}
+.dm-typing{display:flex;gap:4px;padding:12px 16px;align-self:flex-start}
+.dm-typing span{width:5px;height:5px;border-radius:50%;background:var(--teal);opacity:.35;animation:bounce .7s ease-in-out infinite}
+.dm-typing span:nth-child(2){animation-delay:.12s}
+.dm-typing span:nth-child(3){animation-delay:.24s}
+@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px);opacity:.7}}
+.demo-caption{position:absolute;top:50%;right:0;transform:translateY(-50%);width:340px;display:flex;flex-direction:column;gap:20px}
+.demo-step{display:flex;align-items:flex-start;gap:14px;opacity:0;transform:translateX(30px)}
+.demo-step.show{opacity:1;transform:translateX(0);transition:all .6s cubic-bezier(.23,1,.32,1)}
+.demo-step-n{font-family:'DM Mono',monospace;font-size:32px;font-weight:500;color:var(--teal);opacity:.2;line-height:1}
+.demo-step-t{font-weight:700;font-size:15px;margin-bottom:4px}
+.demo-step-d{font-size:13px;color:var(--muted);line-height:1.6}
+
+/* ═══════ PROBLEM ═══════ */
+.problem{padding:140px 48px;background:var(--void);overflow:hidden}
+.problem-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start}
+.cost-row{display:flex;justify-content:space-between;align-items:center;padding:20px 0;border-bottom:1px solid var(--border)}
+.cost-label{font-size:15px;color:var(--muted)}
+.cost-value{font-family:'DM Mono',monospace;font-weight:500;font-size:17px}
+.cost-total{border-bottom:none;padding-top:28px;margin-top:8px;border-top:2px solid var(--cost-red-border)}
+.cost-total .cost-label{font-weight:700;color:var(--warm);font-size:13px;letter-spacing:1.5px;text-transform:uppercase}
+.cost-total .cost-value{font-size:36px;color:var(--red)}
+.strike{position:relative;display:inline-block}
+.strike::after{content:'';position:absolute;left:-4px;right:-4px;top:50%;height:3px;background:var(--teal);transform:scaleX(0);transform-origin:left;transition:transform .8s cubic-bezier(.23,1,.32,1)}
+.strike.go::after{transform:scaleX(1)}
+
+/* ═══════ FEATURES ═══════ */
+.features{padding:140px 48px;background:var(--black);overflow:hidden}
+.feat-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:24px;margin-top:64px}
+.feat-card{background:var(--card-bg);border:1px solid var(--border);padding:44px 36px;position:relative;overflow:hidden;transition:all .5s cubic-bezier(.23,1,.32,1)}
+.feat-card:hover{border-color:var(--border2);background:var(--card-hover-bg);transform:translateY(-4px)}
+.feat-card:hover .feat-icon{transform:scale(1.1);opacity:1}
+.feat-icon{width:40px;height:40px;border-radius:8px;background:var(--icon-bg);display:flex;align-items:center;justify-content:center;margin-bottom:24px;transition:all .4s;opacity:.7}
+.feat-icon svg{width:20px;height:20px;stroke:var(--teal);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.feat-title{font-weight:800;font-size:18px;letter-spacing:-.3px;margin-bottom:10px}
+.feat-desc{font-size:14px;color:var(--muted);line-height:1.7}
+.feat-ex{margin-top:14px;padding:10px 14px;background:var(--feat-ex-bg);border-left:2px solid var(--teal);font-family:'DM Mono',monospace;font-size:12px;color:var(--feat-ex-color)}
+
+/* ═══════ ENGINE ═══════ */
+.engine{padding:140px 48px;background:var(--void)}
+.engine-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+.terminal{background:var(--terminal-bg);border:1px solid var(--border2);border-radius:8px;overflow:hidden}
+.terminal-bar{display:flex;align-items:center;gap:6px;padding:14px 20px;border-bottom:1px solid var(--border);background:var(--terminal-bar-bg)}
+.terminal-bar span{width:10px;height:10px;border-radius:50%}
+.terminal-bar span:nth-child(1){background:rgba(253,54,28,.7)}
+.terminal-bar span:nth-child(2){background:rgba(255,213,0,.7)}
+.terminal-bar span:nth-child(3){background:rgba(0,166,132,.7)}
+.terminal-bar-t{margin-left:auto;font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:1px}
+.terminal-body{padding:24px;min-height:280px}
+#tw{font-family:'DM Mono',monospace;font-size:13px;color:var(--teal);white-space:pre-wrap;line-height:2}
+#tw .tw-line{opacity:0;transform:translateX(-8px);transition:all .4s}
+#tw .tw-line.show{opacity:1;transform:translateX(0)}
+.shuffler-wrap{position:relative;height:180px;margin-top:36px}
+.shuf-card{position:absolute;top:0;left:0;right:0;background:var(--shuf-bg);border:1px solid var(--border);padding:18px 22px;transition:all .7s cubic-bezier(.23,1,.32,1);border-radius:6px}
+.shuf-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.shuf-seq{font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:2px}
+.shuf-badge{font-family:'DM Mono',monospace;font-size:10px;padding:3px 10px;letter-spacing:1px;border-radius:2px}
+.bg-act{background:rgba(0,166,132,.12);color:var(--teal)}
+.bg-ina{background:var(--badge-ina-bg);color:var(--badge-ina-color)}
+.shuf-txt{font-weight:500;font-size:14px}
+
+/* ═══════ HOW ═══════ */
+.how{padding:140px 48px 300px;background:var(--void)}
+.stack-card{max-width:1120px;margin:0 auto;position:sticky;top:100px}
+.stack-inner{background:var(--stack-bg);border:1px solid var(--border);padding:60px;display:grid;grid-template-columns:auto 1fr;gap:40px;align-items:start;margin-bottom:20px;position:relative;overflow:hidden}
+.stack-inner::before{content:'';position:absolute;top:0;left:0;bottom:0;width:3px;background:var(--teal);opacity:var(--stack-accent)}
+.stack-n{font-family:'DM Mono',monospace;font-weight:500;font-size:72px;color:var(--teal);line-height:1;opacity:.15}
+.stack-t{font-weight:900;font-size:28px;letter-spacing:-1px;margin-bottom:14px}
+.stack-d{font-size:16px;color:var(--muted);line-height:1.75;max-width:560px}
+.stack-ex{margin-top:16px;font-family:'DM Mono',monospace;font-size:13px;color:var(--muted);line-height:1.9}
+
+/* ═══════ KUWAIT ═══════ */
+.kuwait{padding:160px 48px;text-align:center;position:relative;overflow:hidden;background:var(--void)}
+.kuwait-glow{position:absolute;width:500px;height:500px;border-radius:50%;background:var(--kuwait-glow);top:50%;left:50%;transform:translate(-50%,-50%);opacity:.4}
+.kw-flag{font-size:80px;margin-bottom:28px;position:relative;z-index:1}
+.kw-h2{font-family:'Cairo',sans-serif;font-weight:900;font-size:clamp(40px,6vw,72px);direction:rtl;line-height:1.25;margin-bottom:16px;position:relative;z-index:1}
+.kw-sub{font-family:'Cairo',sans-serif;font-size:22px;font-weight:700;color:var(--muted);direction:rtl;line-height:1.7;position:relative;z-index:1}
+
+/* ═══════ CTA ═══════ */
+.cta-section{padding:180px 48px 60px;background:var(--black);text-align:center;position:relative;overflow:hidden}
+.cta-section::before{content:'';position:absolute;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,var(--teal) 0%,transparent 70%);top:-200px;left:50%;transform:translateX(-50%);opacity:var(--cta-glow-opacity)}
+.cta-h{font-weight:900;font-style:italic;font-size:clamp(40px,6vw,72px);letter-spacing:-3px;line-height:1.06;margin-bottom:40px}
+.cta-h em{color:var(--teal);font-style:italic}
+.cta-btn{display:inline-flex;align-items:center;gap:12px;padding:20px 64px;background:var(--teal);color:#0F1114;font-weight:700;font-size:16px;letter-spacing:1.5px;text-decoration:none;transition:all .4s;border:none;outline:none}
+.cta-btn:hover{background:#00c49b;transform:translateY(-3px) scale(1.02);box-shadow:0 20px 60px rgba(0,166,132,.25)}
+.cta-btn svg{width:18px;height:18px;transition:transform .3s}
+.cta-btn:hover svg{transform:translateX(5px)}
+.footer{margin-top:120px;padding-top:28px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center}
+.f-name{font-weight:900;font-size:11px;letter-spacing:5px;color:var(--footer-name);text-transform:uppercase}
+.f-sub{font-size:12px;color:var(--footer-sub)}
+.f-status{display:flex;align-items:center;gap:8px}
+.f-dot{width:6px;height:6px;border-radius:50%;background:var(--teal);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.f-txt{font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:1px}
+.f-handle{font-family:'DM Mono',monospace;font-size:12px;color:var(--teal)}
+
+/* ═══════ RESPONSIVE ═══════ */
+@media(max-width:900px){
+  .nav{padding:16px 20px}
+  .nav-links{display:none}
+  .nav-burger{display:flex}
+  .hero-content{padding:0 20px}
+  .hero-h1{font-size:clamp(36px,10vw,52px);letter-spacing:-2px}
+  section{padding-left:20px!important;padding-right:20px!important}
+  .problem-grid,.engine-grid{grid-template-columns:1fr;gap:48px}
+  .feat-grid{grid-template-columns:1fr}
+  .demo-phone{width:280px;height:500px}
+  .demo-caption{position:relative;top:auto;right:auto;transform:none;width:100%;margin-top:40px}
+  .demo-step{opacity:1!important;transform:none!important}
+  .stack-inner{padding:32px;grid-template-columns:1fr;gap:16px}
+  .stack-n{font-size:48px}
+  .footer{flex-direction:column;gap:16px;text-align:center}
+  .hero-scroll{left:20px}
+}
+</style>
+</head>
+<body>
+
+<div class="glow-grid"><canvas id="gridCanvas"></canvas></div>
+
+<!-- NAV -->
+<nav class="nav" id="navbar">
+  <div class="nav-brand"><span data-en>HASEEB<i>.</i></span><span data-ar>حسيب<i>.</i></span></div>
+  <div class="nav-r">
+    <div class="nav-links">
+      <a href="#demo"><span data-en>Product</span><span data-ar>المنتج</span></a>
+      <a href="#problem"><span data-en>The.Problem.</span><span data-ar>المشكلة</span></a>
+      <a href="#features"><span data-en>Features</span><span data-ar>المميزات</span></a>
+      <a href="#how"><span data-en>How.It.Works.</span><span data-ar>كيف يشتغل</span></a>
+    </div>
+    <div class="nav-toggles">
+      <button class="toggle-btn lang-toggle" id="langToggle" aria-label="Switch language"><span class="lang-label"></span></button>
+      <button class="toggle-btn theme-toggle" id="themeToggle" aria-label="Toggle theme">
+        <svg class="icon-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+        <svg class="icon-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+      </button>
+    </div>
+    <button class="nav-burger" id="navBurger" aria-label="Menu"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#demo" class="mm-link"><span data-en>Product</span><span data-ar>المنتج</span></a>
+  <a href="#problem" class="mm-link"><span data-en>The.Problem.</span><span data-ar>المشكلة</span></a>
+  <a href="#features" class="mm-link"><span data-en>Features</span><span data-ar>المميزات</span></a>
+  <a href="#how" class="mm-link"><span data-en>How.It.Works.</span><span data-ar>كيف يشتغل</span></a>
+  <a href="#cta" class="mm-link mm-cta"><span data-en>Get.Early.Access.</span><span data-ar>سجّل الحين</span></a>
+  <div class="mm-toggles">
+    <button class="toggle-btn lang-toggle" id="langToggleMob" aria-label="Switch language"><span class="lang-label"></span></button>
+    <button class="toggle-btn theme-toggle" id="themeToggleMob" aria-label="Toggle theme">
+      <svg class="icon-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+      <svg class="icon-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+    </button>
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <div class="hero-glow"></div>
+  <div class="hero-content">
+    <div class="hero-tag" id="heroTag"><span data-en>حسيب — AI BOOKKEEPING</span><span data-ar>حسيب — محاسبة ذكية</span></div>
+    <h1 class="hero-h1" id="heroH1">
+      <span data-en><span class="word"><span>Let.</span></span><span class="word"><span>Your.</span></span><span class="word"><span>Numbers.</span></span><br><em><span class="word"><span>Talk.</span></span></em></span>
+      <span data-ar><span class="word"><span>خلّ</span></span> <span class="word"><span>أرقامك</span></span><br><em><span class="word"><span>تتكلم.</span></span></em></span>
+    </h1>
+    <h3 class="hero-h3" id="heroH3">
+      <span data-en>Your business is trying to tell you something.</span>
+      <span data-ar>شركتك تحاول تقولك شي.</span>
+    </h3>
+    <p class="hero-sub" id="heroSub">
+      <span data-en>Every business has a story hidden in its numbers. Haseeb reads your receipts, categorizes every transaction, and turns the noise into clarity — so you know exactly what to do to grow.</span>
+      <span data-ar>كل شركة عندها قصة مخبّية بأرقامها. حسيب يقرأ فواتيرك، يصنّف كل عملية، ويحوّل الفوضى لوضوح — عشان تعرف بالضبط شلون تكبر.</span>
+    </p>
+    <div class="hero-actions" id="heroActions">
+      <a href="#cta" class="hero-cta"><span data-en>Get.Early.Access.</span><span data-ar>سجّل الحين</span><svg viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <a href="#demo" class="hero-ghost"><span data-en>See it work &darr;</span><span data-ar>شوف كيف يشتغل &darr;</span></a>
+    </div>
+  </div>
+  <div class="hero-scroll"><div class="hero-scroll-line"></div></div>
+</section>
+<div class="divider"></div>
+
+<!-- DEMO -->
+<section class="demo" id="demo">
+  <div class="container">
+    <div class="tag"><span data-en>PRODUCT</span><span data-ar>المنتج</span></div>
+    <h2 class="h2"><span data-en>Talk to your numbers<br>like you talk to <em>a person.</em></span><span data-ar>كلّم أرقامك<br>مثل ما تكلم <em>أي شخص.</em></span></h2>
+    <p class="para"><span data-en>No forms. No software. No accounting degree. Just tell Haseeb what happened — it finds the story in the data.</span><span data-ar>بدون نماذج. بدون برامج. بدون شهادة محاسبة. بس قول لحسيب شصار — وهو يلقى لك القصة بالأرقام.</span></p>
+    <div class="demo-stage">
+      <div class="demo-phone" id="demoPhone">
+        <div class="demo-phone-notch"></div>
+        <div class="demo-phone-screen">
+          <div class="demo-phone-bar"><div class="demo-phone-bar-dot"></div><div class="demo-phone-bar-name"><span data-en>HASEEB</span><span data-ar>حسيب</span></div></div>
+          <div class="demo-msgs" id="demoMsgs"></div>
+        </div>
+      </div>
+      <div class="demo-caption" id="demoCap">
+        <div class="demo-step" data-s="0"><div class="demo-step-n"><span data-en>01</span><span data-ar>٠١</span></div><div><div class="demo-step-t"><span data-en>You send a message.</span><span data-ar>ترسل رسالة.</span></div><div class="demo-step-d"><span data-en>Text, photo, voice note, invoice — any format, any channel.</span><span data-ar>نص، صورة، تسجيل صوتي، فاتورة — أي صيغة، أي قناة.</span></div></div></div>
+        <div class="demo-step" data-s="1"><div class="demo-step-n"><span data-en>02</span><span data-ar>٠٢</span></div><div><div class="demo-step-t"><span data-en>Haseeb reads and categorizes.</span><span data-ar>حسيب يقرأ ويصنّف.</span></div><div class="demo-step-d"><span data-en>AI identifies vendor, amount, and account in under 3 seconds.</span><span data-ar>الذكاء الاصطناعي يعرف المورّد، المبلغ، والحساب بأقل من ٣ ثواني.</span></div></div></div>
+        <div class="demo-step" data-s="2"><div class="demo-step-n"><span data-en>03</span><span data-ar>٠٣</span></div><div><div class="demo-step-t"><span data-en>You confirm. It&rsquo;s recorded.</span><span data-ar>تأكّد. وانتهى الموضوع.</span></div><div class="demo-step-d"><span data-en>One tap. Posted to your ledger. Audit-ready.</span><span data-ar>ضغطة وحدة. يتسجل بدفترك. جاهز للتدقيق.</span></div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+<div class="divider"></div>
+
+<!-- PROBLEM -->
+<section class="problem" id="problem">
+  <div class="container">
+    <div class="problem-grid">
+      <div>
+        <div class="tag"><span data-en>THE PROBLEM</span><span data-ar>المشكلة</span></div>
+        <h2 class="h2"><span data-en>You spend <span style="color:var(--red)">2,400 KD</span> a year.<br>And your numbers are still <em>silent.</em></span><span data-ar>تصرف <span style="color:var(--red)">٢,٤٠٠ دينار</span> بالسنة.<br>وأرقامك لحد الحين <em>ساكتة.</em></span></h2>
+        <p class="para"><span data-en>Need a number at 11 PM?<br>A receipt from three months ago?<br>A real answer before tomorrow&rsquo;s meeting?<br><br></span><span data-ar>تبي رقم الساعة ١١ بالليل؟<br>فاتورة من قبل ٣ شهور؟<br>جواب حقيقي قبل اجتماع باچر؟<br><br></span><span class="strike" id="goodLuck"><span data-en>Good luck.</span><span data-ar>بالتوفيق.</span></span></p>
+      </div>
+      <div>
+        <div class="cost-row"><span class="cost-label"><span data-en>Monthly retainer</span><span data-ar>اشتراك شهري</span></span><span class="cost-value"><span data-en>200.000 KD</span><span data-ar>٢٠٠.٠٠٠ د.ك</span></span></div>
+        <div class="cost-row"><span class="cost-label"><span data-en>Additional reports</span><span data-ar>تقارير إضافية</span></span><span class="cost-value"><span data-en>50.000 KD</span><span data-ar>٥٠.٠٠٠ د.ك</span></span></div>
+        <div class="cost-row"><span class="cost-label"><span data-en>Year-end filing</span><span data-ar>إقفال نهاية السنة</span></span><span class="cost-value"><span data-en>300.000 KD</span><span data-ar>٣٠٠.٠٠٠ د.ك</span></span></div>
+        <div class="cost-row"><span class="cost-label"><span data-en>Late processing</span><span data-ar>رسوم تأخير</span></span><span class="cost-value" style="color:var(--muted)">???</span></div>
+        <div class="cost-row cost-total"><span class="cost-label"><span data-en>What you actually pay</span><span data-ar>اللي تدفعه فعلياً</span></span><span class="cost-value" id="costNum"><span data-en>0 KD</span><span data-ar>٠ د.ك</span></span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="features" id="features">
+  <div class="container">
+    <div class="tag"><span data-en>CAPABILITIES</span><span data-ar>المميزات</span></div>
+    <h2 class="h2"><span data-en>Everything you need<br>to hear <em>the full story.</em></span><span data-ar>كل شي تحتاجه<br>عشان تسمع <em>القصة كاملة.</em></span></h2>
+    <div class="feat-grid">
+      <div class="feat-card fc"><div class="feat-icon"><svg viewBox="0 0 24 24"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg></div><div class="feat-title"><span data-en>Snap.And.Record.</span><span data-ar>صوّر. وسجّل.</span></div><div class="feat-desc"><span data-en>Photograph a receipt. Forward an invoice. Haseeb reads it, extracts every detail, and prepares the entry.</span><span data-ar>صوّر الفاتورة أو حوّلها. حسيب يقرأها، يستخرج التفاصيل، ويجهّز القيد.</span></div></div>
+      <div class="feat-card fc"><div class="feat-icon"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></div><div class="feat-title"><span data-en>Ask.Anything.</span><span data-ar>اسأل. أي شي.</span></div><div class="feat-desc"><span data-en>Questions in plain language. Answers in plain numbers.</span><span data-ar>أسئلة بلغة عادية. أجوبة بأرقام واضحة.</span></div><div class="feat-ex"><span data-en>&ldquo;How much did we spend on rent this quarter?&rdquo;</span><span data-ar>&ldquo;چم صرفنا على الإيجار هالربع؟&rdquo;</span></div></div>
+      <div class="feat-card fc"><div class="feat-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></div><div class="feat-title"><span data-en>Upload.Your.Bank.</span><span data-ar>ارفع. كشف. البنك.</span></div><div class="feat-desc"><span data-en>Drop your statement. Haseeb matches and categorizes every transaction. Automatically.</span><span data-ar>حمّل كشف حسابك. حسيب يطابق ويصنّف كل عملية. تلقائياً.</span></div></div>
+      <div class="feat-card fc"><div class="feat-icon"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><div class="feat-title"><span data-en>Built.For.Kuwait.</span><span data-ar>مبني. للكويت.</span></div><div class="feat-desc"><span data-en>KWD with three decimals. All 9 Kuwaiti banks. PIFSS-ready. Not a foreign product with Arabic slapped on.</span><span data-ar>دينار كويتي بثلاث خانات. كل ٩ بنوك كويتية. جاهز للتأمينات. مو منتج أجنبي مترجم.</span></div></div>
+      <div class="feat-card fc"><div class="feat-icon"><svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></div><div class="feat-title"><span data-en>See.Your.Numbers.</span><span data-ar>شوف. أرقامك.</span></div><div class="feat-desc"><span data-en>Income statement. Balance sheet. Cash flow. Always current. No waiting for month-end.</span><span data-ar>قائمة دخل. ميزانية. تدفق نقدي. دايماً محدّثة. بدون انتظار نهاية الشهر.</span></div></div>
+      <div class="feat-card fc"><div class="feat-icon"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div><div class="feat-title"><span data-en>Always.On.</span><span data-ar>دايماً. شغّال.</span></div><div class="feat-desc"><span data-en>24/7. Your books live in one place. Accessible from anywhere. No office hours.</span><span data-ar>٢٤/٧. حساباتك بمكان واحد. تقدر توصلها من أي مكان. بدون دوام مكتبي.</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ENGINE -->
+<section class="engine">
+  <div class="container">
+    <div class="engine-grid">
+      <div>
+        <div class="tag"><span data-en>THE ENGINE</span><span data-ar>المحرك</span></div>
+        <h2 class="h2"><span data-en>AI that listens<br><em>before it speaks.</em></span><span data-ar>ذكاء اصطناعي يسمع<br><em>قبل ما يتكلم.</em></span></h2>
+        <p class="para"><span data-en>Haseeb doesn&rsquo;t guess. Three-tier categorization: rules first, learned patterns second, AI third. Every entry is confirmed before it touches your ledger.<br><br>Your numbers stay honest.</span><span data-ar>حسيب ما يخمّن. تصنيف ثلاثي: قواعد أول، أنماط مكتسبة ثاني، ذكاء اصطناعي ثالث. كل قيد يتأكد قبل ما يدخل دفترك.<br><br>أرقامك تبقى صادقة.</span></p>
+        <div class="shuffler-wrap" id="shuffler">
+          <div class="shuf-card" id="sc0"><div class="shuf-head"><span class="shuf-seq" data-en>TXN_001</span><span class="shuf-seq" data-ar>عملية_٠٠١</span><span class="shuf-badge bg-act" id="sb0"></span></div><div class="shuf-txt"><span data-en>Zain Kuwait — Telecom</span><span data-ar>زين الكويت — اتصالات</span></div></div>
+          <div class="shuf-card" id="sc1"><div class="shuf-head"><span class="shuf-seq" data-en>TXN_002</span><span class="shuf-seq" data-ar>عملية_٠٠٢</span><span class="shuf-badge bg-ina" id="sb1"></span></div><div class="shuf-txt"><span data-en>Al Mubarakiya — Supplies</span><span data-ar>المباركية — مستلزمات</span></div></div>
+          <div class="shuf-card" id="sc2"><div class="shuf-head"><span class="shuf-seq" data-en>TXN_003</span><span class="shuf-seq" data-ar>عملية_٠٠٣</span><span class="shuf-badge bg-ina" id="sb2"></span></div><div class="shuf-txt"><span data-en>Hawalli Branch — Rent</span><span data-ar>فرع حولي — إيجار</span></div></div>
+        </div>
+      </div>
+      <div class="terminal">
+        <div class="terminal-bar"><span></span><span></span><span></span><span class="terminal-bar-t"><span data-en>HASEEB ENGINE</span><span data-ar>محرك حسيب</span></span></div>
+        <div class="terminal-body"><div id="tw" style="direction:ltr;text-align:left"></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW -->
+<section class="how" id="how">
+  <div class="container" style="margin-bottom:64px">
+    <div class="tag"><span data-en>HOW IT WORKS</span><span data-ar>كيف يشتغل</span></div>
+    <h2 class="h2"><span data-en>Three steps.<br><em>One clear picture.</em></span><span data-ar>ثلاث خطوات.<br><em>صورة واضحة.</em></span></h2>
+  </div>
+  <div class="stack-card"><div class="stack-inner"><div class="stack-n"><span data-en>01</span><span data-ar>٠١</span></div><div><div class="stack-t"><span data-en>Send.It.</span><span data-ar>أرسل.</span></div><div class="stack-d"><span data-en>Snap a receipt. Forward an invoice. Upload a bank statement. However you work — Haseeb accepts it.</span><span data-ar>صوّر فاتورة. حوّل إيصال. ارفع كشف حساب. بأي طريقة تشتغل — حسيب يقبلها.</span></div></div></div></div>
+  <div class="stack-card"><div class="stack-inner"><div class="stack-n"><span data-en>02</span><span data-ar>٠٢</span></div><div><div class="stack-t"><span data-en>Confirm.It.</span><span data-ar>أكّد.</span></div><div class="stack-d"><span data-en>Haseeb categorizes the transaction, shows you a clear summary. One tap posts it to your ledger.</span><span data-ar>حسيب يصنّف العملية، يعرض لك ملخص واضح. ضغطة وحدة تسجّلها بدفترك.</span></div></div></div></div>
+  <div class="stack-card"><div class="stack-inner"><div class="stack-n"><span data-en>03</span><span data-ar>٠٣</span></div><div><div class="stack-t"><span data-en>Know.It.</span><span data-ar>اعرف.</span></div><div class="stack-d"><span data-en>Ask anything about your business. Get the answer — not a spreadsheet.</span><span data-ar>اسأل أي شي عن شغلك. تحصل الجواب — مو جدول.</span></div><div class="stack-ex"><span data-en>&ldquo;What&rsquo;s my profit this month?&rdquo;<br>&ldquo;Who owes me money?&rdquo;</span><span data-ar>&ldquo;چم ربحنا هالشهر؟&rdquo;<br>&ldquo;منو علينا فلوس؟&rdquo;</span></div></div></div></div>
+</section>
+
+<!-- KUWAIT -->
+<section class="kuwait">
+  <div class="kuwait-glow"></div>
+  <div class="kw-flag">&#x1F1F0;&#x1F1FC;</div>
+  <h2 class="kw-h2">مبني بالكويت<br>للكويت</h2>
+  <p class="kw-sub">مو حل مستورد.<br>شي مبني هني.</p>
+</section>
+
+<!-- CTA -->
+<section class="cta-section" id="cta">
+  <div class="container">
+    <h2 class="cta-h"><span data-en>Your.Numbers.<br>Have.A.<em>Story.</em></span><span data-ar>أرقامك<br>عندها <em>قصة.</em></span></h2>
+    <a href="#" class="cta-btn"><span data-en>Get.Early.Access.</span><span data-ar>سجّل الحين</span><svg viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+    <div class="footer">
+      <div><span class="f-name">THE.NOW.COMPANY.</span><br><span class="f-sub">haseeb.app</span></div>
+      <div class="f-status"><span class="f-dot"></span><span class="f-txt"><span data-en>COMING SOON</span><span data-ar>قريباً</span></span></div>
+      <span class="f-handle">@haseeb.app.kw</span>
+    </div>
+  </div>
+</section>
+
+<script>
+const R=document.documentElement;
+const isAr=()=>R.getAttribute('data-lang')==='ar';
+
+/* ═══ GLOW GRID ═══ */
+(function(){
+  const c=document.getElementById('gridCanvas'),ctx=c.getContext('2d');
+  const dpr=devicePixelRatio||1;let W,H,mx=-1,my=-1,gap=60;
+  function resize(){W=innerWidth;H=innerHeight;c.width=W*dpr;c.height=H*dpr;c.style.width=W+'px';c.style.height=H+'px';ctx.setTransform(dpr,0,0,dpr,0,0)}
+  resize();addEventListener('resize',resize);
+  document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY+scrollY});
+  document.addEventListener('mouseleave',()=>{mx=-1;my=-1});
+  function draw(){ctx.clearRect(0,0,W,H);const sy=scrollY,rgb=getComputedStyle(R).getPropertyValue('--grid-dot').trim();
+    for(let x=gap/2;x<W;x+=gap)for(let y=gap/2;y<H;y+=gap){let a=.04;if(mx>0){const d=Math.hypot(x-mx,y+sy-my);if(d<300)a+=.28*(1-d/300)}ctx.beginPath();ctx.arc(x,y,1.5,0,Math.PI*2);ctx.fillStyle=`rgba(${rgb},${a})`;ctx.fill()}
+    requestAnimationFrame(draw)}draw()})();
+
+/* ═══ THEME TOGGLE ═══ */
+(function(){
+  const btns=[...document.querySelectorAll('.theme-toggle')];
+  if(localStorage.getItem('haseeb-theme')==='light')R.setAttribute('data-theme','light');
+  btns.forEach(b=>b.addEventListener('click',()=>{
+    R.classList.add('transitioning');
+    const light=R.getAttribute('data-theme')==='light';
+    light?R.removeAttribute('data-theme'):R.setAttribute('data-theme','light');
+    localStorage.setItem('haseeb-theme',light?'dark':'light');
+    setTimeout(()=>R.classList.remove('transitioning'),500);
+  }));
+})();
+
+/* ═══ LANGUAGE TOGGLE ═══ */
+(function(){
+  const btns=[...document.querySelectorAll('.lang-toggle')];
+  const saved=localStorage.getItem('haseeb-lang');
+  if(saved==='ar'){R.setAttribute('data-lang','ar');R.lang='ar'}
+  function setLang(lang){
+    R.classList.add('transitioning');
+    R.setAttribute('data-lang',lang);R.lang=lang;
+    localStorage.setItem('haseeb-lang',lang);
+    // Reset chat & terminal for new language
+    document.getElementById('demoMsgs').innerHTML='';
+    document.getElementById('tw').innerHTML='';
+    document.querySelectorAll('.demo-step').forEach(s=>s.classList.remove('show'));
+    mi=0;ti=0;chatStarted=false;termStarted=false;
+    // Force replay if already scrolled past the triggers
+    setTimeout(()=>{
+      const phoneRect=document.getElementById('demoPhone').getBoundingClientRect();
+      const engineRect=document.querySelector('.engine').getBoundingClientRect();
+      if(phoneRect.top<window.innerHeight*.7){chatStarted=true;nextMsg()}
+      if(engineRect.top<window.innerHeight*.7){termStarted=true;typeTerm()}
+      // Update cost counter locale
+      const cn=document.getElementById('costNum');
+      if(cn&&!cn.textContent.startsWith('0')&&!cn.textContent.startsWith('٠')){
+        cn.textContent=lang==='ar'?(2950).toLocaleString('ar-EG')+'+ د.ك':(2950).toLocaleString()+'+ KD';
+      }
+      rS();
+    },100);
+    ScrollTrigger.refresh();
+    setTimeout(()=>R.classList.remove('transitioning'),500);
+  }
+  btns.forEach(b=>b.addEventListener('click',()=>setLang(isAr()?'en':'ar')));
+})();
+
+/* ═══ NAV ═══ */
+addEventListener('scroll',()=>document.getElementById('navbar').classList.toggle('scrolled',scrollY>60));
+const burger=document.getElementById('navBurger'),mmenu=document.getElementById('mobileMenu');
+burger.addEventListener('click',()=>{burger.classList.toggle('open');mmenu.classList.toggle('open');document.body.style.overflow=mmenu.classList.contains('open')?'hidden':''});
+document.querySelectorAll('.mm-link').forEach(a=>a.addEventListener('click',()=>{burger.classList.remove('open');mmenu.classList.remove('open');document.body.style.overflow=''}));
+
+/* ═══ GSAP ═══ */
+gsap.registerPlugin(ScrollTrigger);
+gsap.fromTo('#heroTag span[data-en],#heroTag span[data-ar]',{y:30,opacity:0},{y:0,opacity:1,duration:.8,ease:'power4.out',delay:.2});
+gsap.fromTo('.hero-h1 .word span',{y:'110%'},{y:'0%',duration:1,stagger:.06,ease:'power4.out',delay:.4});
+gsap.fromTo('#heroH3',{y:20,opacity:0},{y:0,opacity:1,duration:.9,ease:'power3.out',delay:.9});
+gsap.fromTo('#heroSub',{y:20,opacity:0},{y:0,opacity:1,duration:1,ease:'power3.out',delay:1.1});
+gsap.fromTo('#heroActions',{y:20,opacity:0},{y:0,opacity:1,duration:.8,ease:'power3.out',delay:1.3});
+gsap.utils.toArray('.tag,.h2,.para,.cost-row,.fc,.terminal,.engine-grid>div:first-child').forEach(el=>{
+  gsap.fromTo(el,{y:40,opacity:0},{y:0,opacity:1,duration:.8,ease:'power3.out',scrollTrigger:{trigger:el,start:'top 88%'}})});
+gsap.fromTo('.fc',{y:60,opacity:0,scale:.96},{y:0,opacity:1,scale:1,duration:.7,stagger:.08,ease:'power3.out',scrollTrigger:{trigger:'.feat-grid',start:'top 80%'}});
+const stk=gsap.utils.toArray('.stack-card');
+stk.forEach((c,i)=>{if(i<stk.length-1)gsap.to(c.querySelector('.stack-inner'),{scale:.96,opacity:.6,scrollTrigger:{trigger:stk[i+1],start:'top 80%',end:'top 20%',scrub:true}})});
+ScrollTrigger.create({trigger:'.cost-total',start:'top 85%',once:true,onEnter:()=>{
+  let v={n:0};gsap.to(v,{n:2950,duration:2.2,ease:'power2.out',onUpdate:()=>{
+    const s=isAr()?Math.round(v.n).toLocaleString('ar-EG')+'+ د.ك':Math.round(v.n).toLocaleString()+'+ KD';
+    document.getElementById('costNum').textContent=s}})
+}});
+ScrollTrigger.create({trigger:'#goodLuck',start:'top 80%',once:true,onEnter:()=>setTimeout(()=>{const e=document.getElementById('goodLuck');if(e)e.classList.add('go')},600)});
+gsap.fromTo('.cta-h',{scale:.85,opacity:0},{scale:1,opacity:1,duration:1,ease:'power3.out',scrollTrigger:{trigger:'.cta-section',start:'top 75%'}});
+gsap.fromTo('.cta-btn',{y:30,opacity:0},{y:0,opacity:1,duration:.8,delay:.3,ease:'power3.out',scrollTrigger:{trigger:'.cta-section',start:'top 75%'}});
+
+/* ═══ CHAT ═══ */
+const msgsEn=[
+  {t:'user',txt:'Paid Zain 85 KD for the office line'},
+  {t:'typing'},
+  {t:'ai',txt:'<b>Zain Kuwait</b> — 85.000 KD\nTelecommunications → Operating Expenses\n\nPost to ledger?'},
+  {t:'user',txt:'Yes'},
+  {t:'typing'},
+  {t:'ai',txt:'✓ <b>Posted.</b> Entry JE-0847.\nOperating expenses this month: 1,240.500 KD'}
+];
+const msgsAr=[
+  {t:'user',txt:'دفعت ٨٥ دينار لزين عن خط المكتب'},
+  {t:'typing'},
+  {t:'ai',txt:'<b>زين الكويت</b> — ٨٥.٠٠٠ د.ك\nاتصالات ← مصاريف تشغيلية\n\nأسجّلها بالدفتر؟'},
+  {t:'user',txt:'اي أكّد'},
+  {t:'typing'},
+  {t:'ai',txt:'✓ <b>تم التسجيل.</b> قيد رقم JE-0847.\nمصاريف التشغيل هالشهر: ١,٢٤٠.٥٠٠ د.ك'}
+];
+let mi=0,chatStarted=false;
+const mc=document.getElementById('demoMsgs'),demoSteps=document.querySelectorAll('.demo-step');
+function nextMsg(){
+  const msgs=isAr()?msgsAr:msgsEn;
+  if(mi>=msgs.length)return;
+  const m=msgs[mi];
+  if(m.t==='typing'){const t=document.createElement('div');t.className='dm-typing';t.innerHTML='<span></span><span></span><span></span>';mc.appendChild(t);mc.scrollTop=mc.scrollHeight;mi++;setTimeout(()=>{t.remove();nextMsg()},1000);return}
+  const d=document.createElement('div');d.className='dm dm-'+m.t;d.innerHTML=m.txt.replace(/\n/g,'<br>');mc.appendChild(d);
+  setTimeout(()=>{d.classList.add('show');mc.scrollTop=mc.scrollHeight},30);
+  if(mi===0)setTimeout(()=>demoSteps[0]&&demoSteps[0].classList.add('show'),200);
+  if(mi===2)setTimeout(()=>demoSteps[1]&&demoSteps[1].classList.add('show'),200);
+  if(mi===5)setTimeout(()=>demoSteps[2]&&demoSteps[2].classList.add('show'),200);
+  mi++;setTimeout(nextMsg,mi<=1?900:1500);
+}
+ScrollTrigger.create({trigger:'#demoPhone',start:'top 70%',onEnter:()=>{if(!chatStarted){chatStarted=true;setTimeout(nextMsg,500)}},once:false});
+
+/* ═══ TERMINAL ═══ */
+const tlEn=['> Scanning receipt...','> Vendor: Zain Kuwait','> Amount: 85.000 KD','> Category: Telecommunications','> Account: 5200 — Operating Expenses','> Confidence: 97.2%','> ✓ Ready for confirmation_'];
+const tlAr=['> قراءة الفاتورة...','> المورّد: زين الكويت','> المبلغ: ٨٥.٠٠٠ د.ك','> التصنيف: اتصالات','> الحساب: ٥٢٠٠ — مصاريف تشغيلية','> نسبة الثقة: ٩٧.٢٪','> ✓ القيد جاهز للتأكيد_'];
+let ti=0,termStarted=false;const te=document.getElementById('tw');
+function typeTerm(){const lines=isAr()?tlAr:tlEn;if(ti>=lines.length)return;const s=document.createElement('div');s.className='tw-line';s.textContent=lines[ti];te.appendChild(s);setTimeout(()=>s.classList.add('show'),30);ti++;setTimeout(typeTerm,400)}
+ScrollTrigger.create({trigger:'.engine',start:'top 70%',onEnter:()=>{if(!termStarted){termStarted=true;typeTerm()}},once:false});
+
+/* ═══ SHUFFLER ═══ */
+const badgeEn=['Categorized','Processing','Queued'],badgeAr=['مصنّفة','قيد المعالجة','بالانتظار'];
+let ord=[0,1,2];
+function rS(){ord.forEach((di,pos)=>{const el=document.getElementById('sc'+di);el.style.transform=`translateY(${pos*30}px) scale(${1-pos*.04})`;el.style.zIndex=10-pos;el.style.opacity=1-pos*.2;
+  const b=document.getElementById('sb'+di);b.className='shuf-badge '+(pos===0?'bg-act':'bg-ina');b.textContent=(isAr()?badgeAr:badgeEn)[pos]})}
+rS();setInterval(()=>{ord.unshift(ord.pop());rS()},2800);
+</script>
+</body>
+</html>
